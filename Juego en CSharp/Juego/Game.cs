@@ -16,6 +16,8 @@ namespace Juego
         {
             Init();
 
+            Draw();
+
             while (true)
             {
                 cki = Console.ReadKey();
