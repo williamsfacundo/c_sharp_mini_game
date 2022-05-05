@@ -20,6 +20,6 @@ namespace Juego
         {
             Console.SetCursorPosition(position.X, position.Y);
             Console.Write(characterDrawChar);
-        }        
+        }       
     }
 }

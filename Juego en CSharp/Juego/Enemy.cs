@@ -9,36 +9,51 @@ namespace Juego
             
         }
 
-        public void Update() 
+        public void Update(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY) 
         {
-            MoveCharacter();
+            MoveCharacter(worldMinX, worldMaxX, worldMinY, worldMaxY);
         }
 
-        private void MoveCharacter() 
+        private void MoveCharacter(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY) 
         {
             int random = Program.generateRandom.Next(1, 4);
 
             switch (random) 
             {
                 case 1:
-                    
-                    position.Y++;
+
+                    if (position.Y + 1 < worldMaxY) 
+                    {
+                        position.Y++;
+                    }                    
                     break;
                 case 2:
 
-                    position.Y--;
+                    if (position.Y > worldMinY) 
+                    {
+                        position.Y--;
+                    }
                     break;
                 case 3:
 
-                    position.X++;
+                    if (position.X + 1 < worldMaxX)
+                    {
+                        position.X++;
+                    }                    
                     break;
                 case 4:
 
-                    position.X--;
+                    if (position.X - 1 > worldMinX)
+                    {
+                        position.X--;
+                    }                    
                     break;
                 default:
 
-                    position.X++;
+                    if (position.X + 1 < worldMaxX)
+                    {
+                        position.X++;
+                    }                    
                     break;
             }
         }

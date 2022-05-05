@@ -7,12 +7,16 @@ namespace Juego
     {
         private const short initialPlayerXPosition = 2;
         private const short initialPlayerYPosition = 2;
+        private const short xMaxLimit = 30;
+        private const short xMinLimit = 1;
+        private const short yMaxLimit = 15;
+        private const short yMinLimit = 1;
         private const short maxEnemies = 5;
 
         private const int enemiesMinXSpawnPosition = 5;
-        private const int enemiesMaxXSpawnPosition = 49;
+        private const int enemiesMaxXSpawnPosition = xMaxLimit - 1;
         private const int enemiesMinYSpawnPosition = 5;
-        private const int enemiesMaxYSpawnPosition = 49;
+        private const int enemiesMaxYSpawnPosition = yMaxLimit - 1;
 
         private const char playerChar = '☻';
         private const char enemiesChar = '☺';
@@ -71,7 +75,7 @@ namespace Juego
 
         private static void Input()
         {
-            player.Input(1, 50, 1, 50, ref cki);
+            player.Input(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit, ref cki);
             CloseApplicationInput();
         }
 
@@ -87,7 +91,7 @@ namespace Juego
         {
             for (short i = 0; i < maxEnemies; i++) 
             {
-                enemies[i].Update();                
+                enemies[i].Update(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit);                
             }
         }
 
