@@ -8,17 +8,19 @@ namespace Juego
         const short initialPlayerXPosition = 2;
         const short initialPlayerYPosition = 2;
 
+        private static bool runGame;
+        
         private static Player player;     
 
         private static ConsoleKeyInfo cki;       
-
+                
         public static void GameLoop()
         {
             Init();
 
             Draw();
 
-            while (true)
+            while (runGame)
             {
                 cki = Console.ReadKey();
 
@@ -34,12 +36,22 @@ namespace Juego
 
         private static void Init()
         {
-            player = new Player(initialPlayerXPosition, initialPlayerYPosition); 
+            player = new Player(initialPlayerXPosition, initialPlayerYPosition);
+            runGame = true;
         }
 
         private static void Input()
         {
             player.Input(1, 50, 1, 50, ref cki);
+            CloseApplicationInput();
+        }
+
+        private static void CloseApplicationInput() 
+        {
+            if (cki.Key == ConsoleKey.Escape) 
+            {
+                runGame = !runGame;
+            }
         }
 
         /*private static void Update()
