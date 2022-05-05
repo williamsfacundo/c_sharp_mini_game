@@ -8,19 +8,7 @@ namespace Juego
 {
     class Character
     {
-        private static struct_position_data position;
-
-        public struct_position_data Position 
-        {
-            set 
-            {
-                position = value;
-            }
-            get 
-            {
-                return position;
-            }
-        }
+        public struct_position_data position;       
 
         public Character(short x, short y) 
         {
@@ -28,10 +16,10 @@ namespace Juego
             position.Y = y;
         }
 
-        public static void Draw(char characterDrawChar) 
+        public void Draw(char characterDrawChar) 
         {
             Console.SetCursorPosition(position.X, position.Y);
             Console.Write(characterDrawChar);
-        } //☻
+        } 
     }
 }

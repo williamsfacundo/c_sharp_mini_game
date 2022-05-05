@@ -2,14 +2,11 @@
 
 namespace Juego
 {
-    class Player
-    {
-        struct_position_data position;
-               
-        public Player(short x, short y) 
+    class Player : Character
+    {              
+        public Player(short x, short y) : base(x, y) 
         {
-            position.X = x;
-            position.Y = y;
+            
         }
 
         public void Input(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY, ref ConsoleKeyInfo cki) 
@@ -33,12 +30,6 @@ namespace Juego
             {
                 position.Y--;
             }
-        }
-
-        public void Draw() 
-        {
-            Console.SetCursorPosition(position.X, position.Y);
-            Console.Write('☻');
-        }
+        }       
     }
 }

@@ -54,14 +54,9 @@ namespace Juego
             }
         }
 
-        /*private static void Update()
-        {
-
-        }*/
-
         private static void Draw()
         {
-            player.Draw();
+            player.Draw('☻');
         }
     }
 }
