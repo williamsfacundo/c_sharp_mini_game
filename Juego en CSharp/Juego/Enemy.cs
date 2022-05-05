@@ -3,27 +3,25 @@
 namespace Juego
 {
     class Enemy : Character
-    {
-        private static Random generateRandom;
-        
+    {        
         public Enemy(short x, short y) : base(x, y) 
         {
-            generateRandom = new Random();
+            
         }
 
-        public static void Update() 
+        public void Update() 
         {
             MoveCharacter();
         }
 
-        private static void MoveCharacter() 
+        private void MoveCharacter() 
         {
-            int random = generateRandom.Next(1, 4);
+            int random = Program.generateRandom.Next(1, 4);
 
             switch (random) 
             {
                 case 1:
-
+                    
                     position.Y++;
                     break;
                 case 2:
