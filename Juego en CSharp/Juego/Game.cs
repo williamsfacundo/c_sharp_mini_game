@@ -5,6 +5,9 @@ namespace Juego
 {
     class Game
     {
+        const short initialPlayerXPosition = 2;
+        const short initialPlayerYPosition = 2;
+
         private static Player player;     
 
         private static ConsoleKeyInfo cki;       
@@ -29,7 +32,7 @@ namespace Juego
 
         private static void Init()
         {
-            player = new Player(2, 2);
+            player = new Player(initialPlayerXPosition, initialPlayerYPosition); 
         }
 
         private static void Input()
