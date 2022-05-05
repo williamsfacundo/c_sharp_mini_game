@@ -9,8 +9,8 @@ namespace Juego
         const short initialPlayerYPosition = 2;
 
         private static bool runGame;
-        
-        private static Player player;     
+
+        private static Player player;        
 
         private static ConsoleKeyInfo cki;       
                 
@@ -19,7 +19,7 @@ namespace Juego
             Init();
 
             Draw();
-
+            
             while (runGame)
             {
                 cki = Console.ReadKey();

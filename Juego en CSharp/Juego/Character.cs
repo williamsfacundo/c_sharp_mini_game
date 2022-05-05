@@ -8,7 +8,7 @@ namespace Juego
 {
     class Character
     {
-        public struct_position_data position;       
+        public static struct_position_data position;       
 
         public Character(short x, short y) 
         {
