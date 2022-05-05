@@ -38,7 +38,7 @@ namespace Juego
         public void Draw() 
         {
             Console.SetCursorPosition(position.X, position.Y);
-            Console.Write("☻");
+            Console.Write('☻');
         }
     }
 }
