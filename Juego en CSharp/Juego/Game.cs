@@ -6,12 +6,14 @@ namespace Juego
     class Game
     {
         private const short initialPlayerXPosition = 2;
-        private const short initialPlayerYPosition = 2;
+        private const short initialPlayerYPosition = 3;
         private const short xMaxLimit = 30;
         private const short xMinLimit = 1;
         private const short yMaxLimit = 15;
-        private const short yMinLimit = 1;
+        private const short yMinLimit = 3;
         private const short maxEnemies = 5;
+        private const short scoreXPosition = 1;
+        private const short scoreYPosition = 1;
 
         private const int enemiesMinXSpawnPosition = 5;
         private const int enemiesMaxXSpawnPosition = xMaxLimit - 1;
@@ -23,18 +25,18 @@ namespace Juego
 
         private static bool runGame;
 
-        private static Player player;        
+        private static Player player;
 
         private static Enemy[] enemies;// 
 
-        private static ConsoleKeyInfo cki;       
-                
+        private static ConsoleKeyInfo cki;
+
         public static void GameLoop()
         {
             Init();
 
             Draw();
-            
+
             while (runGame)
             {
                 Input();
@@ -55,7 +57,7 @@ namespace Juego
             runGame = true;
         }
 
-        private static void SetEnemies() 
+        private static void SetEnemies()
         {
             enemies = new Enemy[maxEnemies];
 
@@ -84,34 +86,41 @@ namespace Juego
             CloseApplicationInput();
         }
 
-        private static void CloseApplicationInput() 
+        private static void CloseApplicationInput()
         {
-            if (cki.Key == ConsoleKey.Escape) 
+            if (cki.Key == ConsoleKey.Escape)
             {
                 runGame = !runGame;
             }
         }
 
-        private static void Update() 
+        private static void Update()
         {
-            for (short i = 0; i < maxEnemies; i++) 
+            for (short i = 0; i < maxEnemies; i++)
             {
-                enemies[i].Update(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit);                
+                enemies[i].Update(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit);
             }
         }
 
         private static void Draw()
         {
+            ShowPlayerScore(scoreXPosition, scoreYPosition);
             player.Draw(playerChar);
             DrawEnemies();
         }
 
-        private static void DrawEnemies() 
+        private static void DrawEnemies()
         {
-            for (short i = 0; i < maxEnemies; i++) 
+            for (short i = 0; i < maxEnemies; i++)
             {
                 enemies[i].Draw(enemiesChar);
             }
+        }
+
+        private static void ShowPlayerScore(short xPos, short yPos)
+        {
+            Console.SetCursorPosition(xPos, yPos);
+            Console.Write("Score" + player.Points);
         }
     }
 }
