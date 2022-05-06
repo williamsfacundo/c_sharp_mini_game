@@ -17,10 +17,10 @@ namespace Juego
         private const short playerLivesXPosition = 10;
         private const short playerLivesYPosition = 1;
 
-        private const int enemiesMinXSpawnPosition = 5;
-        private const int enemiesMaxXSpawnPosition = xMaxLimit - 1;
-        private const int enemiesMinYSpawnPosition = 5;
-        private const int enemiesMaxYSpawnPosition = yMaxLimit - 1;
+        private const int characterMinXSpawnPosition = 5;
+        private const int characterMaxXSpawnPosition = xMaxLimit - 1;
+        private const int characterMinYSpawnPosition = 5;
+        private const int characterMaxYSpawnPosition = yMaxLimit - 1;
 
         private const char playerChar = '☻';
         private const char enemiesChar = '☺';
@@ -29,7 +29,7 @@ namespace Juego
 
         private static Player player;
 
-        private static Enemy[] enemies; 
+        private static Enemy[] enemies;
 
         private static ConsoleKeyInfo cki;
 
@@ -63,13 +63,13 @@ namespace Juego
         {
             enemies = new Enemy[maxEnemies];
 
-            short xPos = (short)Program.generateRandom.Next(enemiesMinXSpawnPosition, enemiesMaxXSpawnPosition);
-            short yPos = (short)Program.generateRandom.Next(enemiesMinYSpawnPosition, enemiesMaxYSpawnPosition);
+            short xPos = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+            short yPos = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
             for (short i = 0; i < maxEnemies; i++)
             {
-                xPos = (short)Program.generateRandom.Next(enemiesMinXSpawnPosition, enemiesMaxXSpawnPosition);
-                yPos = (short)Program.generateRandom.Next(enemiesMinYSpawnPosition, enemiesMaxYSpawnPosition);
+                xPos = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                yPos = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
                 enemies[i] = new Enemy(xPos, yPos);
             }
@@ -102,6 +102,8 @@ namespace Juego
             {
                 enemies[i].Update(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit);
             }
+
+            PlayerEnemieCollision();
         }
 
         private static void Draw()
@@ -126,10 +128,33 @@ namespace Juego
             Console.Write("Score-" + player.Points);
         }
 
-        private static void ShowPlayerLives(short xPos, short yPos) 
+        private static void ShowPlayerLives(short xPos, short yPos)
         {
             Console.SetCursorPosition(xPos, yPos);
             Console.Write("Lives-" + player.Lives);
+        }
+
+        private static bool IsPlayerCollidingWithEnemies()
+        {
+            for (short i = 0; i < maxEnemies; i++)
+            {
+                if (enemies[i].position.X == player.position.X & enemies[i].position.Y == player.position.Y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static void PlayerEnemieCollision()
+        {
+            if (IsPlayerCollidingWithEnemies()) 
+            {               
+                player.Lives -= 1;
+                player.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                player.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+            }
         }
     }
 }

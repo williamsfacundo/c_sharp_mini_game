@@ -4,8 +4,7 @@
     {
         private short x;
         private short y;
-
-
+        
         public short X
         {
             set
