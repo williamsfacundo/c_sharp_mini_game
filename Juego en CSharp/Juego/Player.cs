@@ -10,6 +10,8 @@ namespace Juego
         private const short pointsGained = 5;
         private const short initialLives = 5;
 
+        bool canAttack;       
+
         public short Points 
         {
             set 
@@ -34,10 +36,23 @@ namespace Juego
             }
         }
 
+        public bool CanAttack
+        {
+            set
+            {
+                canAttack = value;
+            }
+            get
+            {
+                return canAttack;
+            }
+        }
+
         public Player(short x, short y) : base(x, y) 
         {
             Points = 0;
             Lives = initialLives;
+            CanAttack = false;
         }
 
         public void Input(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY, ref ConsoleKeyInfo cki) 

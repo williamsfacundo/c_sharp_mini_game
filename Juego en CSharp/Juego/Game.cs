@@ -16,6 +16,8 @@ namespace Juego
         private const short scoreYPosition = 1;
         private const short playerLivesXPosition = 10;
         private const short playerLivesYPosition = 1;
+        
+        private static short enemyCollisionIndex = 0;
 
         private const int characterMinXSpawnPosition = 5;
         private const int characterMaxXSpawnPosition = xMaxLimit - 1;
@@ -62,6 +64,7 @@ namespace Juego
             SetEnemies();
             powerUp = new PoweUp((short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
                 (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
+            enemyCollisionIndex = 0;
         }
 
         private static void SetEnemies()
@@ -145,12 +148,13 @@ namespace Juego
             Console.Write("Lives-" + player.Lives);
         }
 
-        private static bool IsPlayerCollidingWithEnemies()
+        private static bool IsPlayerCollidingWithEnemies(ref short index)
         {
             for (short i = 0; i < maxEnemies; i++)
             {
                 if (enemies[i].position.X == player.position.X & enemies[i].position.Y == player.position.Y)
                 {
+                    index = i;
                     return true;
                 }
             }
@@ -160,11 +164,19 @@ namespace Juego
 
         private static void PlayerEnemieCollision()
         {
-            if (IsPlayerCollidingWithEnemies()) 
-            {               
-                player.Lives -= 1;
-                player.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-                player.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+            if (IsPlayerCollidingWithEnemies(ref enemyCollisionIndex)) 
+            {
+                if (player.CanAttack) 
+                {
+                    enemies[enemyCollisionIndex].position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                    enemies[enemyCollisionIndex].position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+                }
+                else 
+                {
+                    player.Lives -= 1;
+                    player.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                    player.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+                }                
             }
         }
     }

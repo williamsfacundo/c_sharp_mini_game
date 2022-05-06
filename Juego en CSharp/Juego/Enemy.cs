@@ -3,21 +3,7 @@
 namespace Juego
 {
     class Enemy : Character
-    {        
-        bool makeDamage;
-
-        public bool MakeDamage 
-        {
-            set 
-            {
-                makeDamage = value;
-            }
-            get 
-            {
-                return makeDamage;
-            }
-        }
-
+    {
         public Enemy(short x, short y) : base(x, y) 
         {
             
