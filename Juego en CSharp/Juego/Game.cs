@@ -124,9 +124,9 @@ namespace Juego
             ShowPlayerScore();
             ShowPlayerLives();
             ShowPlayerStatus();
-            player.Draw(playerChar);
             DrawEnemies();
             powerUp.Draw(powerUpChar);
+            player.Draw(playerChar);                        
         }
 
         private static void DrawEnemies()
@@ -185,6 +185,9 @@ namespace Juego
                 {
                     enemies[enemyCollisionIndex].position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
                     enemies[enemyCollisionIndex].position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+
+                    player.CanAttack = false;
+                    showAttackMeassege = false;
                 }
                 else 
                 {
