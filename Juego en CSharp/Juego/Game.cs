@@ -14,6 +14,8 @@ namespace Juego
         private const short maxEnemies = 5;
         private const short scoreXPosition = 1;
         private const short scoreYPosition = 1;
+        private const short playerLivesXPosition = 10;
+        private const short playerLivesYPosition = 1;
 
         private const int enemiesMinXSpawnPosition = 5;
         private const int enemiesMaxXSpawnPosition = xMaxLimit - 1;
@@ -27,7 +29,7 @@ namespace Juego
 
         private static Player player;
 
-        private static Enemy[] enemies;// 
+        private static Enemy[] enemies; 
 
         private static ConsoleKeyInfo cki;
 
@@ -105,6 +107,7 @@ namespace Juego
         private static void Draw()
         {
             ShowPlayerScore(scoreXPosition, scoreYPosition);
+            ShowPlayerLives(playerLivesXPosition, playerLivesYPosition);
             player.Draw(playerChar);
             DrawEnemies();
         }
@@ -120,7 +123,13 @@ namespace Juego
         private static void ShowPlayerScore(short xPos, short yPos)
         {
             Console.SetCursorPosition(xPos, yPos);
-            Console.Write("Score" + player.Points);
+            Console.Write("Score-" + player.Points);
+        }
+
+        private static void ShowPlayerLives(short xPos, short yPos) 
+        {
+            Console.SetCursorPosition(xPos, yPos);
+            Console.Write("Lives-" + player.Lives);
         }
     }
 }
