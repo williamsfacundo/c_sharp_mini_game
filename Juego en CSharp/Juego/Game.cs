@@ -37,8 +37,6 @@ namespace Juego
             
             while (runGame)
             {
-                cki = Console.ReadKey();
-
                 Input();
                 Update();
 
@@ -75,6 +73,13 @@ namespace Juego
 
         private static void Input()
         {
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(false); // true = hide input
+            }
+
+            cki = Console.ReadKey();
+
             player.Input(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit, ref cki);
             CloseApplicationInput();
         }
