@@ -16,7 +16,7 @@ namespace Juego
 
         private void MoveCharacter(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY) 
         {
-            int random = Program.generateRandom.Next(1, 4);
+            int random = Program.generateRandom.Next(1, 8);
 
             switch (random) 
             {
@@ -49,11 +49,7 @@ namespace Juego
                     }                    
                     break;
                 default:
-
-                    if (position.X + 1 < worldMaxX)
-                    {
-                        position.X++;
-                    }                    
+                                      
                     break;
             }
         }
