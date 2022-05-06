@@ -199,7 +199,9 @@ namespace Juego
         {
             if (powerUp.PoweupPickedUp(player.position.X, player.position.Y))
             {
-                showAttackMeassege = true;                                
+                showAttackMeassege = true;
+
+                player.CanAttack = true;
             }            
         }
     }
