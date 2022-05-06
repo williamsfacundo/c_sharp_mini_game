@@ -202,6 +202,8 @@ namespace Juego
                 showAttackMeassege = true;
 
                 player.CanAttack = true;
+
+                player.AddPoint();
             }            
         }
     }

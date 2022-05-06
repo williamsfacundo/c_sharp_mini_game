@@ -6,8 +6,7 @@ namespace Juego
     {    
         private short points;
         private short lives;
-
-        private const short pointsGained = 5;
+        
         private const short initialLives = 5;
 
         bool canAttack;       
@@ -76,6 +75,11 @@ namespace Juego
             {
                 position.Y--;
             }
-        }       
-    }
+        }
+
+        public void AddPoint()
+        {
+            Points++;
+        }
+    }    
 }
