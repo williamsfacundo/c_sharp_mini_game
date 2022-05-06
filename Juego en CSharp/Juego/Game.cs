@@ -34,10 +34,10 @@ namespace Juego
         private static bool showAttackMeassege;
 
         private static Player player;
-        
+
         private static Enemy[] enemies;
 
-        private static PoweUp powerUp; 
+        private static PowerUp powerUp;
 
         private static ConsoleKeyInfo cki;
 
@@ -65,9 +65,15 @@ namespace Juego
             runGame = true;
             player = new Player(initialPlayerXPosition, initialPlayerYPosition);
             SetEnemies();
-            powerUp = new PoweUp((short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
-                (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
+            powerUp = new PowerUp();
+            RandomPowerUp();
             enemyCollisionIndex = 0;
+        }
+
+        private static void RandomPowerUp()
+        {
+            powerUp.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+            powerUp.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);            
         }
 
         private static void SetEnemies()
@@ -125,8 +131,16 @@ namespace Juego
             ShowPlayerLives();
             ShowPlayerStatus();
             DrawEnemies();
-            powerUp.Draw(powerUpChar);
+            DrawPowerUp();
             player.Draw(playerChar);                        
+        }
+
+        private static void DrawPowerUp() 
+        {
+            if (!player.CanAttack)
+            {
+                powerUp.Draw(powerUpChar);
+            }
         }
 
         private static void DrawEnemies()
@@ -138,7 +152,7 @@ namespace Juego
         }
 
         private static void ShowPlayerScore()
-        {
+        {            
             Console.SetCursorPosition(scoreXPosition, scoreYPosition);
             Console.Write("Score-" + player.Points);
         }
@@ -186,6 +200,10 @@ namespace Juego
                     enemies[enemyCollisionIndex].position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
                     enemies[enemyCollisionIndex].position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
+                    RandomPowerUp();
+
+                    player.AddPoint();
+
                     player.CanAttack = false;
                     showAttackMeassege = false;
                 }
@@ -200,13 +218,11 @@ namespace Juego
 
         private static void PlayerCollisionWithPowerUp() 
         {
-            if (powerUp.PoweupPickedUp(player.position.X, player.position.Y))
+            if (powerUp.PoweupPickedUp(player.position.X, player.position.Y) && !player.CanAttack)
             {
                 showAttackMeassege = true;
 
-                player.CanAttack = true;
-
-                player.AddPoint();
+                player.CanAttack = true;               
             }            
         }
     }

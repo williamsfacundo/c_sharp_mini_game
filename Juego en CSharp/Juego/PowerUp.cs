@@ -1,8 +1,13 @@
 ﻿namespace Juego
 {
-    class PoweUp : Character
+    class PowerUp : Character
     {
-        public PoweUp(short x, short y) : base(x, y)
+        public PowerUp() : base(0, 0) 
+        {
+
+        }
+
+        public PowerUp(short x, short y) : base(x, y)
         {
 
         }
