@@ -16,7 +16,9 @@ namespace Juego
         private const short scoreYPosition = 1;
         private const short playerLivesXPosition = 10;
         private const short playerLivesYPosition = 1;
-        
+        private const short showAttackMeassegeXPosition = 20;
+        private const short showAttackMeassegeYPosition = 1;
+
         private static short enemyCollisionIndex = 0;
 
         private const int characterMinXSpawnPosition = 5;
@@ -29,6 +31,7 @@ namespace Juego
         private const char powerUpChar = '♦';
 
         private static bool runGame;
+        private static bool showAttackMeassege;
 
         private static Player player;
         
@@ -113,16 +116,14 @@ namespace Juego
 
             PlayerEnemieCollision();
 
-            if (powerUp.PoweupPickedUp(player.position.X, player.position.Y)) 
-            {
-                //
-            }
+            PlayerCollisionWithPowerUp();
         }
 
         private static void Draw()
         {
-            ShowPlayerScore(scoreXPosition, scoreYPosition);
-            ShowPlayerLives(playerLivesXPosition, playerLivesYPosition);
+            ShowPlayerScore();
+            ShowPlayerLives();
+            ShowPlayerStatus();
             player.Draw(playerChar);
             DrawEnemies();
             powerUp.Draw(powerUpChar);
@@ -136,16 +137,30 @@ namespace Juego
             }
         }
 
-        private static void ShowPlayerScore(short xPos, short yPos)
+        private static void ShowPlayerScore()
         {
-            Console.SetCursorPosition(xPos, yPos);
+            Console.SetCursorPosition(scoreXPosition, scoreYPosition);
             Console.Write("Score-" + player.Points);
         }
 
-        private static void ShowPlayerLives(short xPos, short yPos)
+        private static void ShowPlayerLives()
         {
-            Console.SetCursorPosition(xPos, yPos);
+            Console.SetCursorPosition(playerLivesXPosition, playerLivesYPosition);
             Console.Write("Lives-" + player.Lives);
+        }
+
+        private static void ShowPlayerStatus() 
+        {
+            Console.SetCursorPosition(showAttackMeassegeXPosition, showAttackMeassegeYPosition);
+
+            if (showAttackMeassege) 
+            {                
+                Console.Write("ATTACK");
+            }
+            else 
+            {
+                Console.Write("VULNERABLE");
+            }
         }
 
         private static bool IsPlayerCollidingWithEnemies(ref short index)
@@ -178,6 +193,14 @@ namespace Juego
                     player.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
                 }                
             }
+        }
+
+        private static void PlayerCollisionWithPowerUp() 
+        {
+            if (powerUp.PoweupPickedUp(player.position.X, player.position.Y))
+            {
+                showAttackMeassege = true;                                
+            }            
         }
     }
 }
