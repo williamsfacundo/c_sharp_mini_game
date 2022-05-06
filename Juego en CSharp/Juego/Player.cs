@@ -3,10 +3,25 @@
 namespace Juego
 {
     class Player : Character
-    {              
+    {    
+        private short points;
+        private const short pointsGained = 5;
+
+        public short Points 
+        {
+            set 
+            {
+                points = value;
+            }
+            get 
+            {
+                return points;
+            }
+        }
+
         public Player(short x, short y) : base(x, y) 
         {
-            
+            Points = 0;
         }
 
         public void Input(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY, ref ConsoleKeyInfo cki) 
