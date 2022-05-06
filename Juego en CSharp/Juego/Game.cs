@@ -24,12 +24,15 @@ namespace Juego
 
         private const char playerChar = '☻';
         private const char enemiesChar = '☺';
+        private const char powerUpChar = '♦';
 
         private static bool runGame;
 
         private static Player player;
-
+        
         private static Enemy[] enemies;
+
+        private static PoweUp powerUp; 
 
         private static ConsoleKeyInfo cki;
 
@@ -54,9 +57,11 @@ namespace Juego
 
         private static void Init()
         {
+            runGame = true;
             player = new Player(initialPlayerXPosition, initialPlayerYPosition);
             SetEnemies();
-            runGame = true;
+            powerUp = new PoweUp((short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
+                (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
         }
 
         private static void SetEnemies()
@@ -104,6 +109,11 @@ namespace Juego
             }
 
             PlayerEnemieCollision();
+
+            if (powerUp.PoweupPickedUp(player.position.X, player.position.Y)) 
+            {
+                //
+            }
         }
 
         private static void Draw()
@@ -112,6 +122,7 @@ namespace Juego
             ShowPlayerLives(playerLivesXPosition, playerLivesYPosition);
             player.Draw(playerChar);
             DrawEnemies();
+            powerUp.Draw(powerUpChar);
         }
 
         private static void DrawEnemies()
