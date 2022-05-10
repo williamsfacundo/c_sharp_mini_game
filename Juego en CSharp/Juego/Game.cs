@@ -5,12 +5,13 @@ namespace Juego
 {
     class Game
     {
+        public const short worldMinX = 1;
+        public const short worldMaxX = 30;
+        public const short worldMinY = 3;
+        public const short worldMaxY = 15;
+
         private const short initialPlayerXPosition = 2;
-        private const short initialPlayerYPosition = 3;
-        private const short xMaxLimit = 30;
-        private const short xMinLimit = 1;
-        private const short yMaxLimit = 15;
-        private const short yMinLimit = 3;
+        private const short initialPlayerYPosition = 3;        
         private const short maxEnemies = 5;
         private const short scoreXPosition = 1;
         private const short scoreYPosition = 1;
@@ -22,9 +23,9 @@ namespace Juego
         private static short enemyCollisionIndex = 0;
 
         private const int characterMinXSpawnPosition = 5;
-        private const int characterMaxXSpawnPosition = xMaxLimit - 1;
+        private const int characterMaxXSpawnPosition = worldMaxX - 1;
         private const int characterMinYSpawnPosition = 5;
-        private const int characterMaxYSpawnPosition = yMaxLimit - 1;
+        private const int characterMaxYSpawnPosition = worldMaxY - 1;
 
         private const char playerChar = '☻';
         private const char enemiesChar = '☺';
@@ -39,7 +40,7 @@ namespace Juego
 
         private static PowerUp powerUp;
 
-        private static ConsoleKeyInfo cki;
+        private static ConsoleKeyInfo cki;        
 
         public static void GameLoop()
         {
@@ -101,7 +102,7 @@ namespace Juego
 
             cki = Console.ReadKey();
 
-            player.Input(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit, ref cki);
+            player.Input(ref cki);
             CloseApplicationInput();
         }
 
@@ -117,7 +118,7 @@ namespace Juego
         {
             for (short i = 0; i < maxEnemies; i++)
             {
-                enemies[i].Update(xMinLimit, xMaxLimit, yMinLimit, yMaxLimit);
+                enemies[i].Update();
             }
 
             PlayerEnemieCollision();

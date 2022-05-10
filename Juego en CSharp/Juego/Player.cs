@@ -9,7 +9,7 @@ namespace Juego
         
         private const short initialLives = 5;
 
-        bool canAttack;       
+        private bool canAttack;       
 
         public short Points 
         {
@@ -54,24 +54,24 @@ namespace Juego
             CanAttack = false;
         }
 
-        public void Input(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY, ref ConsoleKeyInfo cki) 
+        public void Input(ref ConsoleKeyInfo cki) 
         {
-            if (cki.Key == ConsoleKey.LeftArrow && position.X - 1 > worldMinX)
+            if (cki.Key == ConsoleKey.LeftArrow && position.X - 1 > Game.worldMinX)
             {                
                 position.X--;
             }
 
-            if (cki.Key == ConsoleKey.RightArrow && position.X + 1 < worldMaxX)
+            if (cki.Key == ConsoleKey.RightArrow && position.X + 1 < Game.worldMaxX)
             {
                 position.X++;
             }
 
-            if (cki.Key == ConsoleKey.DownArrow && position.Y + 1 < worldMaxY) 
+            if (cki.Key == ConsoleKey.DownArrow && position.Y + 1 < Game.worldMaxY) 
             {
                 position.Y++;
             }
 
-            if (cki.Key == ConsoleKey.UpArrow && position.Y > worldMinY) 
+            if (cki.Key == ConsoleKey.UpArrow && position.Y > Game.worldMinY) 
             {
                 position.Y--;
             }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Juego
+﻿namespace Juego
 {
     class Enemy : Character
     {
@@ -9,12 +7,12 @@ namespace Juego
             
         }
 
-        public void Update(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY) 
+        public void Update() 
         {
-            MoveCharacter(worldMinX, worldMaxX, worldMinY, worldMaxY);
+            MoveCharacter();
         }
 
-        private void MoveCharacter(short worldMinX, short worldMaxX, short worldMinY, short worldMaxY) 
+        private void MoveCharacter() 
         {
             int random = Program.generateRandom.Next(1, 8);
 
@@ -22,31 +20,35 @@ namespace Juego
             {
                 case 1:
 
-                    if (position.Y + 1 < worldMaxY) 
+                    if (position.Y + 1 < Game.worldMaxY) 
                     {
                         position.Y++;
-                    }                    
+                    }  
+                    
                     break;
                 case 2:
 
-                    if (position.Y > worldMinY) 
+                    if (position.Y > Game.worldMinY) 
                     {
                         position.Y--;
                     }
+
                     break;
                 case 3:
 
-                    if (position.X + 1 < worldMaxX)
+                    if (position.X + 1 < Game.worldMaxX)
                     {
                         position.X++;
-                    }                    
+                    } 
+                    
                     break;
                 case 4:
 
-                    if (position.X - 1 > worldMinX)
+                    if (position.X - 1 > Game.worldMinX)
                     {
                         position.X--;
-                    }                    
+                    } 
+                    
                     break;
                 default:
                                       

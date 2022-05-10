@@ -10,6 +10,8 @@ namespace Juego
         {
             generateRandom = new Random();
 
+            Console.CursorVisible = false;
+
             Game.GameLoop();
         }        
     }
