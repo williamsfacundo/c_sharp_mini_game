@@ -296,6 +296,6 @@ namespace Juego
 
                 player.CanAttack = true;               
             }            
-        }
+        }        
     }
 }

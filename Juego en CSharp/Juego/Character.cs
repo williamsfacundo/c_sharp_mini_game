@@ -8,8 +8,7 @@ namespace Juego
 
         public Character(short x, short y) 
         {
-            position.X = x;
-            position.Y = y;
+            position = new struct_position_data(x, y);            
         }
 
         public void Draw(char characterDrawChar) 
