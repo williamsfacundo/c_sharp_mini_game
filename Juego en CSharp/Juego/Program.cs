@@ -7,6 +7,6 @@ namespace Juego
         static void Main(string[] args)
         {
             Game.GameLoop();
-        }        
+        }     //Agregar sistema de achievements   
     }
 }

@@ -2,9 +2,20 @@
 {
     class Enemy : Character
     {
+        private const short maxMovementPatterns = 3;
+        private const short maxNormalMovementRandomValues = 8;
+
+        private int random;
+
+        private Enemies_type.Enum_Enemy_Types movementPattern;
+
+        private bool rowMovementDirection;
+
         public Enemy(short x, short y) : base(x, y) 
-        {
+        {           
+            movementPattern = GetRandomMovementPattern();
             
+            rowMovementDirection = GetRandomRowMovement();
         }
 
         public void Update() 
@@ -14,21 +25,43 @@
 
         private void MoveCharacter() 
         {
-            int random = Game.GenerateRandom.Next(1, 8);
+            switch (movementPattern)
+            {
+                case Enemies_type.Enum_Enemy_Types.NORMAL_MOVEMENT:
 
-            switch (random) 
+                    NormalMovemnt();
+
+                    break;
+                case Enemies_type.Enum_Enemy_Types.DIAGONAL_MOVEMENT:
+
+                    DiagonalMovement();
+                    
+                    break;
+                case Enemies_type.Enum_Enemy_Types.ROW_MOVEMENT:
+
+                    RowMovement();
+                    
+                    break;
+            }
+        }
+
+        private void NormalMovemnt() 
+        {
+            random = Game.GenerateRandom.Next(1, maxNormalMovementRandomValues);
+
+            switch (random)
             {
                 case 1:
 
-                    if (position.Y + 1 < Game.worldMaxY) 
+                    if (position.Y + 1 < Game.worldMaxY)
                     {
                         position.Y++;
-                    }  
-                    
+                    }
+
                     break;
                 case 2:
 
-                    if (position.Y > Game.worldMinY) 
+                    if (position.Y - 1 > Game.worldMinY)
                     {
                         position.Y--;
                     }
@@ -39,21 +72,98 @@
                     if (position.X + 1 < Game.worldMaxX)
                     {
                         position.X++;
-                    } 
-                    
+                    }
+
                     break;
                 case 4:
 
                     if (position.X - 1 > Game.worldMinX)
                     {
                         position.X--;
-                    } 
-                    
+                    }
+
                     break;
                 default:
-                                      
+
                     break;
             }
+        }
+
+        private void DiagonalMovement() 
+        {
+            random = Game.GenerateRandom.Next(1, maxNormalMovementRandomValues);
+
+            switch (random)
+            {
+                case 1:
+
+                    if (position.Y + 1 < Game.worldMaxY && position.X + 1 < Game.worldMaxX)
+                    {
+                        position.Y++;
+                        position.X++;
+                    }
+
+                    break;
+                case 2:
+
+                    if (position.Y + 1 < Game.worldMaxY && position.X - 1 > Game.worldMinX)
+                    {
+                        position.Y++;
+                        position.X--;
+                    }
+
+                    break;
+                case 3:
+
+                    if (position.Y - 1 > Game.worldMinY && position.X + 1 < Game.worldMaxX)
+                    {
+                        position.Y--;
+                        position.X++;
+                    }
+
+                    break;
+                case 4:
+
+                    if (position.Y - 1 > Game.worldMinY && position.X - 1 > Game.worldMinX)
+                    {
+                        position.Y--;
+                        position.X--;
+                    }
+
+                    break;
+                default:
+
+                    break;
+            }
+        }
+
+        private void RowMovement() 
+        {
+            
+        }
+
+        Enemies_type.Enum_Enemy_Types GetRandomMovementPattern() 
+        {
+            random = Game.GenerateRandom.Next(1, maxMovementPatterns);
+
+            switch (random) 
+            {
+                case 1:
+                    return Enemies_type.Enum_Enemy_Types.NORMAL_MOVEMENT;                    
+                case 2:
+                    return Enemies_type.Enum_Enemy_Types.DIAGONAL_MOVEMENT;                    
+                case 3:
+                    return Enemies_type.Enum_Enemy_Types.ROW_MOVEMENT;
+                default:
+                    return Enemies_type.Enum_Enemy_Types.NORMAL_MOVEMENT;
+            }
+        }
+
+        bool GetRandomRowMovement() 
+        {
+            random = Game.GenerateRandom.Next(1, 2);
+
+            return random % 2 == 0;
         }
     }
 }
