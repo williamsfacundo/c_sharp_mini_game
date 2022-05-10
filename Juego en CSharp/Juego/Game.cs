@@ -41,7 +41,8 @@ namespace Juego
         private const int characterMinYSpawnPosition = 5;
         private const int characterMaxYSpawnPosition = worldMaxY - 1;
 
-        private const char playerChar = '☻';
+        private const char playerOneChar = '1';
+        private const char playerTwoChar = '2';
         private const char enemiesChar = '☺';
         private const char powerUpChar = '♦';
 
@@ -177,13 +178,13 @@ namespace Juego
 
             DrawPowerUp();
 
-            DrawPlayers();
+            DrawPlayer(players[0], playerOneChar);
+            DrawPlayer(players[1], playerTwoChar);
         }
 
-        private static void DrawPlayers() 
+        private static void DrawPlayer(Player player, char playerChar) 
         {
-            players[0].Draw(playerChar);
-            players[1].Draw(playerChar);
+            player.Draw(playerChar);            
         }
 
         private static void DrawPowerUp() 
