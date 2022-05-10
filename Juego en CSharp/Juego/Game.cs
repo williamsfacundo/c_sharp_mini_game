@@ -28,7 +28,7 @@ namespace Juego
         private const short playerTwoLivesYPosition = 30;
 
         private const short showPlayerOneAttackMeassegeXPosition = 20;
-        private const short showPlayerOneAttackMeassegeYPosition = 30;
+        private const short showPlayerOneAttackMeassegeYPosition = 1;
 
         private const short showPlayerTwoAttackMeassegeXPosition = 20;
         private const short showPlayerTwoAttackMeassegeYPosition = 30;
@@ -37,6 +37,7 @@ namespace Juego
 
         private const int characterMinXSpawnPosition = 5;
         private const int characterMaxXSpawnPosition = worldMaxX - 1;
+
         private const int characterMinYSpawnPosition = 5;
         private const int characterMaxYSpawnPosition = worldMaxY - 1;
 
@@ -165,10 +166,16 @@ namespace Juego
         private static void Draw()
         {
             ShowPlayersScore();
+
             ShowPlayerLives();
-            ShowPlayersStatus();
+
+            ShowPlayersStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
+            ShowPlayersStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
+
             DrawEnemies();
+
             DrawPowerUp();
+
             DrawPlayers();
         }
 
@@ -212,29 +219,18 @@ namespace Juego
             Console.Write("Lives 2-" + players[1].Lives);
         }
 
-        private static void ShowPlayersStatus() 
+        private static void ShowPlayersStatus(short xPos, short yPos, Player player) 
         {
-            Console.SetCursorPosition(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition);
+            Console.SetCursorPosition(xPos, yPos);
 
-            if (players[0].ShowAttackMeassege) 
+            if (player.ShowAttackMeassege) 
             {                
                 Console.Write("ATTACK");
             }
             else 
             {
                 Console.Write("VULNERABLE");
-            }
-
-            Console.SetCursorPosition(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition);
-
-            if (players[1].ShowAttackMeassege)
-            {
-                Console.Write("ATTACK");
-            }
-            else
-            {
-                Console.Write("VULNERABLE");
-            }
+            }            
         }
 
         private static bool IsPlayerCollidingWithEnemies(Player player, ref short index)
