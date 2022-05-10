@@ -165,8 +165,9 @@ namespace Juego
 
         private static void Draw()
         {
-            ShowPlayersScore();
-
+            ShowPlayersScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score 1-", players[0]);
+            ShowPlayersScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score 2-", players[1]);
+            
             ShowPlayerLives();
 
             ShowPlayersStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
@@ -201,13 +202,10 @@ namespace Juego
             }
         }
 
-        private static void ShowPlayersScore()
+        private static void ShowPlayersScore(short xPos, short yPos, string meassege, Player player)
         {            
-            Console.SetCursorPosition(playerOneScoreXPosition, playerOneScoreYPosition);
-            Console.Write("Score 1-" + players[0].Points);
-
-            Console.SetCursorPosition(playerTwoScoreXPosition, playerTwoScoreYPosition);
-            Console.Write("Score 2-" + players[1].Points);
+            Console.SetCursorPosition(xPos, yPos);
+            Console.Write(meassege + player.Points);            
         }
 
         private static void ShowPlayerLives()
