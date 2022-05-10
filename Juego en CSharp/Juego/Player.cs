@@ -54,24 +54,24 @@ namespace Juego
             CanAttack = false;
         }
 
-        public void Input(ref ConsoleKeyInfo cki) 
+        public void Input(ConsoleKey moveLeftKey, ConsoleKey moveRightKey, ConsoleKey moveDownKey, ConsoleKey moveUpKey, ref ConsoleKeyInfo cki) 
         {
-            if (cki.Key == ConsoleKey.LeftArrow && position.X - 1 > Game.worldMinX)
+            if (cki.Key == moveLeftKey && position.X - 1 > Game.worldMinX)
             {                
                 position.X--;
             }
 
-            if (cki.Key == ConsoleKey.RightArrow && position.X + 1 < Game.worldMaxX)
+            if (cki.Key == moveRightKey && position.X + 1 < Game.worldMaxX)
             {
                 position.X++;
             }
 
-            if (cki.Key == ConsoleKey.DownArrow && position.Y + 1 < Game.worldMaxY) 
+            if (cki.Key == moveDownKey && position.Y + 1 < Game.worldMaxY) 
             {
                 position.Y++;
             }
 
-            if (cki.Key == ConsoleKey.UpArrow && position.Y > Game.worldMinY) 
+            if (cki.Key == moveUpKey && position.Y > Game.worldMinY) 
             {
                 position.Y--;
             }

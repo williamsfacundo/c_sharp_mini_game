@@ -102,7 +102,7 @@ namespace Juego
 
             cki = Console.ReadKey();
 
-            player.Input(ref cki);
+            player.Input(ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.UpArrow, ref cki);
             CloseApplicationInput();
         }
 
