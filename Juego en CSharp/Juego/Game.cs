@@ -166,13 +166,14 @@ namespace Juego
 
         private static void Draw()
         {
-            ShowPlayersScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score 1-", players[0]);
-            ShowPlayersScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score 2-", players[1]);
+            ShowPlayerScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score p1-", players[0]);
+            ShowPlayerScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score p2-", players[1]);
             
-            ShowPlayerLives();
-
-            ShowPlayersStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
-            ShowPlayersStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
+            ShowPlayerLives(playerOneLivesXPosition, playerOneLivesYPosition, players[0], "Lives p1-");
+            ShowPlayerLives(playerTwoLivesXPosition, playerTwoLivesYPosition, players[1], "Lives p2-");
+            
+            ShowPlayerStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
+            ShowPlayerStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
 
             DrawEnemies();
 
@@ -203,22 +204,19 @@ namespace Juego
             }
         }
 
-        private static void ShowPlayersScore(short xPos, short yPos, string meassege, Player player)
+        private static void ShowPlayerScore(short xPos, short yPos, string meassege, Player player)
         {            
             Console.SetCursorPosition(xPos, yPos);
             Console.Write(meassege + player.Points);            
         }
 
-        private static void ShowPlayerLives()
+        private static void ShowPlayerLives(short xPos, short yPos, Player player, string meassege)
         {
-            Console.SetCursorPosition(playerOneLivesXPosition, playerOneLivesYPosition);
-            Console.Write("Lives 1-" + players[0].Lives);
-
-            Console.SetCursorPosition(playerTwoLivesXPosition, playerTwoLivesYPosition);
-            Console.Write("Lives 2-" + players[1].Lives);
+            Console.SetCursorPosition(xPos, yPos);
+            Console.Write(meassege + player.Lives);
         }
 
-        private static void ShowPlayersStatus(short xPos, short yPos, Player player) 
+        private static void ShowPlayerStatus(short xPos, short yPos, Player player) 
         {
             Console.SetCursorPosition(xPos, yPos);
 
