@@ -21,16 +21,16 @@ namespace Juego
         private const short playerTwoScoreXPosition = 1;
         private const short playerTwoScoreYPosition = 30;
 
-        private const short playerOneLivesXPosition = 10;
+        private const short playerOneLivesXPosition = 13;
         private const short playerOneLivesYPosition = 1;
 
-        private const short playerTwoLivesXPosition = 10;
+        private const short playerTwoLivesXPosition = 13;
         private const short playerTwoLivesYPosition = 30;
 
-        private const short showPlayerOneAttackMeassegeXPosition = 20;
+        private const short showPlayerOneAttackMeassegeXPosition = 25;
         private const short showPlayerOneAttackMeassegeYPosition = 1;
 
-        private const short showPlayerTwoAttackMeassegeXPosition = 20;
+        private const short showPlayerTwoAttackMeassegeXPosition = 25;
         private const short showPlayerTwoAttackMeassegeYPosition = 30;
 
         private static short enemyCollisionIndex = 0;
