@@ -9,7 +9,9 @@ namespace Juego
         
         private const short initialLives = 5;
 
-        private bool canAttack;       
+        private bool canAttack;
+
+        private bool showAttackMeassege;
 
         public short Points 
         {
@@ -44,6 +46,18 @@ namespace Juego
             get
             {
                 return canAttack;
+            }
+        }
+
+        public bool ShowAttackMeassege 
+        {
+            set 
+            {
+                showAttackMeassege = value;
+            }
+            get 
+            {
+                return showAttackMeassege;
             }
         }
 

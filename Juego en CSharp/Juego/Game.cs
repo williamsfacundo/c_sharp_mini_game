@@ -10,15 +10,28 @@ namespace Juego
         public const short worldMinY = 3;
         public const short worldMaxY = 15;
 
-        private const short initialPlayerXPosition = 2;
-        private const short initialPlayerYPosition = 3;        
+        private const short initialPlayerOneXPosition = 2;
+        private const short initialPlayerOneYPosition = 3;       
+        
         private const short maxEnemies = 5;
-        private const short scoreXPosition = 1;
-        private const short scoreYPosition = 1;
-        private const short playerLivesXPosition = 10;
-        private const short playerLivesYPosition = 1;
-        private const short showAttackMeassegeXPosition = 20;
-        private const short showAttackMeassegeYPosition = 1;
+
+        private const short playerOneScoreXPosition = 1;
+        private const short playerOneScoreYPosition = 1;
+
+        private const short playerTwoScoreXPosition = 1;
+        private const short playerTwoScoreYPosition = 30;
+
+        private const short playerOneLivesXPosition = 10;
+        private const short playerOneLivesYPosition = 1;
+
+        private const short playerTwoLivesXPosition = 10;
+        private const short playerTwoLivesYPosition = 30;
+
+        private const short showPlayerOneAttackMeassegeXPosition = 20;
+        private const short showPlayerOneAttackMeassegeYPosition = 30;
+
+        private const short showPlayerTwoAttackMeassegeXPosition = 20;
+        private const short showPlayerTwoAttackMeassegeYPosition = 30;
 
         private static short enemyCollisionIndex = 0;
 
@@ -31,10 +44,9 @@ namespace Juego
         private const char enemiesChar = '☺';
         private const char powerUpChar = '♦';
 
-        private static bool runGame;
-        private static bool showAttackMeassege;
+        private static bool runGame;        
 
-        private static Player player;
+        private static Player[] players;
 
         private static Enemy[] enemies;
 
@@ -63,11 +75,16 @@ namespace Juego
 
         private static void Init()
         {
-            runGame = true;
-            player = new Player(initialPlayerXPosition, initialPlayerYPosition);
+            runGame = true;           
+
             SetEnemies();
+
+            SetPlayers();
+
             powerUp = new PowerUp();
+
             RandomPowerUp();
+
             enemyCollisionIndex = 0;
         }
 
@@ -75,6 +92,16 @@ namespace Juego
         {
             powerUp.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
             powerUp.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);            
+        }
+
+        private static void SetPlayers() 
+        {
+            players = new Player[2];
+
+            for (short i = 0; i < players.Length; i++)
+            {
+                players[i] = new Player((short)(initialPlayerOneXPosition + (i * 2)), initialPlayerOneYPosition);
+            }
         }
 
         private static void SetEnemies()
@@ -100,10 +127,17 @@ namespace Juego
                 Console.ReadKey(false); // true = hide input
             }
 
-            cki = Console.ReadKey();
+            cki = Console.ReadKey(true);
 
-            player.Input(ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.UpArrow, ref cki);
+            PlayerInput();
+
             CloseApplicationInput();
+        }   
+
+        private static void PlayerInput() 
+        {
+            players[0].Input(ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.UpArrow, ref cki);
+            players[1].Input(ConsoleKey.A, ConsoleKey.D, ConsoleKey.S, ConsoleKey.W, ref cki);
         }
 
         private static void CloseApplicationInput()
@@ -121,24 +155,32 @@ namespace Juego
                 enemies[i].Update();
             }
 
-            PlayerEnemieCollision();
+            PlayerEnemieCollision(players[0]);
+            PlayerEnemieCollision(players[1]);
 
-            PlayerCollisionWithPowerUp();
+            PlayerCollisionWithPowerUp(players[0]);
+            PlayerCollisionWithPowerUp(players[1]);
         }
 
         private static void Draw()
         {
-            ShowPlayerScore();
+            ShowPlayersScore();
             ShowPlayerLives();
-            ShowPlayerStatus();
+            ShowPlayersStatus();
             DrawEnemies();
             DrawPowerUp();
-            player.Draw(playerChar);                        
+            DrawPlayers();
+        }
+
+        private static void DrawPlayers() 
+        {
+            players[0].Draw(playerChar);
+            players[1].Draw(playerChar);
         }
 
         private static void DrawPowerUp() 
         {
-            if (!player.CanAttack)
+            if (!players[0].CanAttack || !players[1].CanAttack)
             {
                 powerUp.Draw(powerUpChar);
             }
@@ -152,23 +194,29 @@ namespace Juego
             }
         }
 
-        private static void ShowPlayerScore()
+        private static void ShowPlayersScore()
         {            
-            Console.SetCursorPosition(scoreXPosition, scoreYPosition);
-            Console.Write("Score-" + player.Points);
+            Console.SetCursorPosition(playerOneScoreXPosition, playerOneScoreYPosition);
+            Console.Write("Score 1-" + players[0].Points);
+
+            Console.SetCursorPosition(playerTwoScoreXPosition, playerTwoScoreYPosition);
+            Console.Write("Score 2-" + players[1].Points);
         }
 
         private static void ShowPlayerLives()
         {
-            Console.SetCursorPosition(playerLivesXPosition, playerLivesYPosition);
-            Console.Write("Lives-" + player.Lives);
+            Console.SetCursorPosition(playerOneLivesXPosition, playerOneLivesYPosition);
+            Console.Write("Lives 1-" + players[0].Lives);
+
+            Console.SetCursorPosition(playerTwoLivesXPosition, playerTwoLivesYPosition);
+            Console.Write("Lives 2-" + players[1].Lives);
         }
 
-        private static void ShowPlayerStatus() 
+        private static void ShowPlayersStatus() 
         {
-            Console.SetCursorPosition(showAttackMeassegeXPosition, showAttackMeassegeYPosition);
+            Console.SetCursorPosition(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition);
 
-            if (showAttackMeassege) 
+            if (players[0].ShowAttackMeassege) 
             {                
                 Console.Write("ATTACK");
             }
@@ -176,9 +224,20 @@ namespace Juego
             {
                 Console.Write("VULNERABLE");
             }
+
+            Console.SetCursorPosition(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition);
+
+            if (players[1].ShowAttackMeassege)
+            {
+                Console.Write("ATTACK");
+            }
+            else
+            {
+                Console.Write("VULNERABLE");
+            }
         }
 
-        private static bool IsPlayerCollidingWithEnemies(ref short index)
+        private static bool IsPlayerCollidingWithEnemies(Player player, ref short index)
         {
             for (short i = 0; i < maxEnemies; i++)
             {
@@ -192,9 +251,9 @@ namespace Juego
             return false;
         }
 
-        private static void PlayerEnemieCollision()
+        private static void PlayerEnemieCollision(Player player)
         {
-            if (IsPlayerCollidingWithEnemies(ref enemyCollisionIndex)) 
+            if (IsPlayerCollidingWithEnemies(player, ref enemyCollisionIndex)) 
             {
                 if (player.CanAttack) 
                 {
@@ -206,7 +265,7 @@ namespace Juego
                     player.AddPoint();
 
                     player.CanAttack = false;
-                    showAttackMeassege = false;
+                    player.ShowAttackMeassege = false;
                 }
                 else 
                 {
@@ -217,11 +276,11 @@ namespace Juego
             }
         }
 
-        private static void PlayerCollisionWithPowerUp() 
+        private static void PlayerCollisionWithPowerUp(Player player) 
         {
             if (powerUp.PoweupPickedUp(player.position.X, player.position.Y) && !player.CanAttack)
             {
-                showAttackMeassege = true;
+                player.ShowAttackMeassege = true;
 
                 player.CanAttack = true;               
             }            
