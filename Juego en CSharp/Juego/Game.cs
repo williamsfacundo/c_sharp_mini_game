@@ -5,6 +5,20 @@ namespace Juego
 {
     class Game
     {
+        private static Random generateRandom;
+
+        public static Random GenerateRandom 
+        {
+            set 
+            {
+                generateRandom = value;
+            }
+            get 
+            {
+                return generateRandom;
+            }
+        }
+
         public const short worldMinX = 1;
         public const short worldMaxX = 30;
         public const short worldMinY = 3;
@@ -33,7 +47,8 @@ namespace Juego
         private const short showPlayerTwoAttackMeassegeXPosition = 25;
         private const short showPlayerTwoAttackMeassegeYPosition = 30;
 
-        private static short enemyCollisionIndex = 0;
+        private static short enemyCollisionIndexForP1 = 0;
+        private static short enemyCollisionIndexForP2 = 0;
 
         private const int characterMinXSpawnPosition = 5;
         private const int characterMaxXSpawnPosition = worldMaxX - 1;
@@ -77,6 +92,10 @@ namespace Juego
 
         private static void Init()
         {
+            Console.CursorVisible = false;
+
+            generateRandom = new Random();
+
             runGame = true;           
 
             SetEnemies();
@@ -85,15 +104,15 @@ namespace Juego
 
             powerUp = new PowerUp();
 
-            RandomPowerUp();
+            RandomPowerUpPosition();
 
-            enemyCollisionIndex = 0;
+            enemyCollisionIndexForP1 = 0;
         }
 
-        private static void RandomPowerUp()
+        private static void RandomPowerUpPosition()
         {
-            powerUp.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-            powerUp.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);            
+            powerUp.position.X = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+            powerUp.position.Y = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);            
         }
 
         private static void SetPlayers() 
@@ -110,13 +129,13 @@ namespace Juego
         {
             enemies = new Enemy[maxEnemies];
 
-            short xPos = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-            short yPos = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+            short xPos = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+            short yPos = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
             for (short i = 0; i < maxEnemies; i++)
             {
-                xPos = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-                yPos = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+                xPos = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                yPos = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
                 enemies[i] = new Enemy(xPos, yPos);
             }
@@ -157,11 +176,11 @@ namespace Juego
                 enemies[i].Update();
             }
 
-            PlayerEnemieCollision(players[0]);
-            PlayerEnemieCollision(players[1]);
+            PlayerEnemieCollision(players[0], ref enemyCollisionIndexForP1);
+            PlayerEnemieCollision(players[1], ref enemyCollisionIndexForP2);
 
-            PlayerCollisionWithPowerUp(players[0]);
-            PlayerCollisionWithPowerUp(players[1]);
+            PlayerPickUpPowerUp(players[0]);
+            PlayerPickUpPowerUp(players[1]);
         }
 
         private static void Draw()
@@ -190,7 +209,7 @@ namespace Juego
 
         private static void DrawPowerUp() 
         {
-            if (!players[0].CanAttack || !players[1].CanAttack)
+            if (!players[0].CanAttack && !players[1].CanAttack)
             {
                 powerUp.Draw(powerUpChar);
             }
@@ -244,16 +263,16 @@ namespace Juego
             return false;
         }
 
-        private static void PlayerEnemieCollision(Player player)
+        private static void PlayerEnemieCollision(Player player, ref short enemyCollisionIndex)
         {
             if (IsPlayerCollidingWithEnemies(player, ref enemyCollisionIndex)) 
             {
                 if (player.CanAttack) 
                 {
-                    enemies[enemyCollisionIndex].position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-                    enemies[enemyCollisionIndex].position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+                    enemies[enemyCollisionIndexForP1].position.X = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                    enemies[enemyCollisionIndexForP1].position.Y = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
 
-                    RandomPowerUp();
+                    RandomPowerUpPosition();
 
                     player.AddPoint();
 
@@ -263,13 +282,13 @@ namespace Juego
                 else 
                 {
                     player.Lives -= 1;
-                    player.position.X = (short)Program.generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
-                    player.position.Y = (short)Program.generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
+                    player.position.X = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
+                    player.position.Y = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);
                 }                
             }
         }
 
-        private static void PlayerCollisionWithPowerUp(Player player) 
+        private static void PlayerPickUpPowerUp(Player player) 
         {
             if (powerUp.PoweupPickedUp(player.position.X, player.position.Y) && !player.CanAttack)
             {

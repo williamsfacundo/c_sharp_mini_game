@@ -14,7 +14,7 @@
 
         private void MoveCharacter() 
         {
-            int random = Program.generateRandom.Next(1, 8);
+            int random = Game.GenerateRandom.Next(1, 8);
 
             switch (random) 
             {
