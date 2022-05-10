@@ -139,7 +139,33 @@
 
         private void RowMovement() 
         {
-            
+            switch (rowMovementDirection)
+            {
+                case true:
+
+                    if (position.X + 1 < Game.worldMaxX)
+                    {
+                        position.X++;
+                    }
+                    else
+                    {
+                        rowMovementDirection = !rowMovementDirection;
+                    }
+
+                    break;
+                case false:
+
+                    if (position.X - 1 > Game.worldMinX)
+                    {
+                        position.X--;
+                    }
+                    else
+                    {
+                        rowMovementDirection = !rowMovementDirection;
+                    }
+
+                    break;
+            }
         }
 
         Enemies_type.Enum_Enemy_Types GetRandomMovementPattern() 
