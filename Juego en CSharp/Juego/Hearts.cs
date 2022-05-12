@@ -13,15 +13,9 @@ namespace Juego
 
         }
 
-        public void PickedUp(Player player) 
-        {
-            if (this.position == player.position) 
-            {
-                if (player.Lives + 1 <= player.MaxLives) 
-                {
-                    player.Lives += 1;
-                }                
-            }
+        public bool PickedUp(Player player) 
+        { 
+            return this.position == player.position && player.Lives + 1 <= player.MaxLives;
         }
     }
 }

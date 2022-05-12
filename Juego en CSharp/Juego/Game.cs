@@ -213,8 +213,19 @@ namespace Juego
 
         private static void HeartPickedUpByPlayers() 
         {
-            heart.PickedUp(players[0]);
-            heart.PickedUp(players[1]);
+            if (heart.PickedUp(players[0])) 
+            {
+                players[0].Lives += 1;
+                heart.position = new struct_position_data((short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
+                (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
+            }
+
+            if (heart.PickedUp(players[1])) 
+            {
+                players[1].Lives += 1;
+                heart.position = new struct_position_data((short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
+                (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
+            }
         }
 
         private static void PlayerZeroLives() 
