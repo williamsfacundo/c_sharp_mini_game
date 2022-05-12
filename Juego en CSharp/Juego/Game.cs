@@ -6,14 +6,15 @@ namespace Juego
     class Game
     {
         private static Random generateRandom;
+        private static ConsoleColor backgroundColor = ConsoleColor.White;
 
-        public static Random GenerateRandom 
+        public static Random GenerateRandom
         {
-            set 
+            set
             {
                 generateRandom = value;
             }
-            get 
+            get
             {
                 return generateRandom;
             }
@@ -25,8 +26,8 @@ namespace Juego
         public const short worldMaxY = 15;
 
         private const short initialPlayerOneXPosition = 2;
-        private const short initialPlayerOneYPosition = 3;       
-        
+        private const short initialPlayerOneYPosition = 3;
+
         private const short maxEnemies = 5;
 
         private const short playerOneScoreXPosition = 1;
@@ -56,10 +57,12 @@ namespace Juego
         private const int characterMinYSpawnPosition = 5;
         private const int characterMaxYSpawnPosition = worldMaxY - 1;
 
-        private const char playerOneChar = '1';
-        private const char playerTwoChar = '2';
+        const ConsoleColor playerOneColor = ConsoleColor.Green;
+        const ConsoleColor playerTwoColor = ConsoleColor.Red;
+
+        private const char playerChar = '☻';        
         private const char enemiesChar = '☺';
-        private const char powerUpChar = '♦';
+        private const char powerUpChar = '♦';          
 
         private static bool runGame;        
 
@@ -93,6 +96,9 @@ namespace Juego
         private static void Init()
         {
             Console.CursorVisible = false;
+            Console.WindowWidth = 50;
+            Console.WindowHeight = 40;                  
+           
 
             generateRandom = new Random();
 
@@ -185,26 +191,29 @@ namespace Juego
 
         private static void Draw()
         {
-            ShowPlayerScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score p1-", players[0]);
-            ShowPlayerScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score p2-", players[1]);
+            HUD.ShowPlayerScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score p1-", players[0]);
+            HUD.ShowPlayerScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score p2-", players[1]);
             
-            ShowPlayerLives(playerOneLivesXPosition, playerOneLivesYPosition, players[0], "Lives p1-");
-            ShowPlayerLives(playerTwoLivesXPosition, playerTwoLivesYPosition, players[1], "Lives p2-");
+            HUD.ShowPlayerLives(playerOneLivesXPosition, playerOneLivesYPosition, players[0], "Lives p1-");
+            HUD.ShowPlayerLives(playerTwoLivesXPosition, playerTwoLivesYPosition, players[1], "Lives p2-");
             
-            ShowPlayerStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
-            ShowPlayerStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
+            HUD.ShowPlayerStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
+            HUD.ShowPlayerStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
 
             DrawEnemies();
 
             DrawPowerUp();
 
-            DrawPlayer(players[0], playerOneChar);
-            DrawPlayer(players[1], playerTwoChar);
+            DrawPlayer(players[0], playerChar, playerOneColor);
+            DrawPlayer(players[1], playerChar, playerTwoColor);
         }
 
-        private static void DrawPlayer(Player player, char playerChar) 
+        private static void DrawPlayer(Player player, char playerChar, ConsoleColor playerColor) 
         {
-            player.Draw(playerChar);            
+            Console.ForegroundColor = playerColor;
+            player.Draw(playerChar);
+
+            Console.ForegroundColor = backgroundColor;
         }
 
         private static void DrawPowerUp() 
@@ -221,33 +230,7 @@ namespace Juego
             {
                 enemies[i].Draw(enemiesChar);
             }
-        }
-
-        private static void ShowPlayerScore(short xPos, short yPos, string meassege, Player player)
-        {            
-            Console.SetCursorPosition(xPos, yPos);
-            Console.Write(meassege + player.Points);            
-        }
-
-        private static void ShowPlayerLives(short xPos, short yPos, Player player, string meassege)
-        {
-            Console.SetCursorPosition(xPos, yPos);
-            Console.Write(meassege + player.Lives);
-        }
-
-        private static void ShowPlayerStatus(short xPos, short yPos, Player player) 
-        {
-            Console.SetCursorPosition(xPos, yPos);
-
-            if (player.ShowAttackMeassege) 
-            {                
-                Console.Write("ATTACK");
-            }
-            else 
-            {
-                Console.Write("VULNERABLE");
-            }            
-        }
+        }        
 
         private static bool IsPlayerCollidingWithEnemies(Player player, ref short index)
         {
