@@ -6,7 +6,17 @@ namespace Juego
     {    
         private short points;
         private short lives;
-        
+
+        private const short maxLives = 8;
+
+        public short MaxLives 
+        {
+            get 
+            {
+                return maxLives;
+            }
+        }
+
         private const short initialLives = 5;
 
         private bool canAttack;

@@ -74,7 +74,8 @@ namespace Juego
 
         private const char playerChar = '☻';        
         private const char enemiesChar = '☺';
-        private const char powerUpChar = '♦';          
+        private const char powerUpChar = '♦';
+        private const char heartChar = '♥';
 
         private static bool runGame;        
 
@@ -83,6 +84,8 @@ namespace Juego
         private static Enemy[] enemies;
 
         private static PowerUp powerUp;
+
+        private static Heart heart;       
 
         private static ConsoleKeyInfo cki;        
 
@@ -125,10 +128,13 @@ namespace Juego
             RandomPowerUpPosition();
 
             enemyCollisionIndexForP1 = 0;
+
+            heart = new Heart((short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition),
+                (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition));
         }
 
         private static void RandomPowerUpPosition()
-        {
+        {            
             powerUp.position.X = (short)generateRandom.Next(characterMinXSpawnPosition, characterMaxXSpawnPosition);
             powerUp.position.Y = (short)generateRandom.Next(characterMinYSpawnPosition, characterMaxYSpawnPosition);            
         }
@@ -194,11 +200,29 @@ namespace Juego
                 enemies[i].Update();
             }
 
+            HeartPickedUpByPlayers();
+
             PlayerEnemieCollision(players[0], ref enemyCollisionIndexForP1);
             PlayerEnemieCollision(players[1], ref enemyCollisionIndexForP2);
 
             PlayerPickUpPowerUp(players[0]);
             PlayerPickUpPowerUp(players[1]);
+
+            PlayerZeroLives();
+        }
+
+        private static void HeartPickedUpByPlayers() 
+        {
+            heart.PickedUp(players[0]);
+            heart.PickedUp(players[1]);
+        }
+
+        private static void PlayerZeroLives() 
+        {
+            if (players[0].Lives <= 0 || players[1].Lives <= 0) 
+            {
+                runGame = !runGame;
+            }
         }
 
         private static void Draw()
@@ -218,6 +242,8 @@ namespace Juego
 
             DrawPlayer(players[0], playerChar, playerOneColor);
             DrawPlayer(players[1], playerChar, playerTwoColor);
+
+            heart.Draw(heartChar);
         }
 
         private static void DrawPlayer(Player player, char playerChar, ConsoleColor playerColor) 
