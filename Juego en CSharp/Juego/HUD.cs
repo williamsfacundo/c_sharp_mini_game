@@ -8,21 +8,35 @@ namespace Juego
 {
     class HUD
     {
-        public static void ShowPlayerScore(short xPos, short yPos, string meassege, Player player)
+        public static void ShowPlayerScore(short xPos, short yPos, string meassege, Player player, ConsoleColor textColor)
         {
             Console.SetCursorPosition(xPos, yPos);
-            Console.Write(meassege + player.Points);
+            
+            Console.Write(meassege);
+
+            Console.ForegroundColor = textColor;
+            Console.Write(player.Points);
+
+            Console.ForegroundColor = Game.BackgroundColor;
         }
 
-        public static void ShowPlayerLives(short xPos, short yPos, Player player, string meassege)
+        public static void ShowPlayerLives(short xPos, short yPos, Player player, string meassege, ConsoleColor textColor)
         {
             Console.SetCursorPosition(xPos, yPos);
-            Console.Write(meassege + player.Lives);
+                        
+            Console.Write(meassege);
+
+            Console.ForegroundColor = textColor;
+            Console.Write(player.Lives);
+
+            Console.ForegroundColor = Game.BackgroundColor;
         }
 
-        public static void ShowPlayerStatus(short xPos, short yPos, Player player)
+        public static void ShowPlayerStatus(short xPos, short yPos, Player player, ConsoleColor textColor)
         {
             Console.SetCursorPosition(xPos, yPos);
+
+            Console.ForegroundColor = textColor;
 
             if (player.ShowAttackMeassege)
             {
@@ -32,6 +46,8 @@ namespace Juego
             {
                 Console.Write("VULNERABLE");
             }
+
+            Console.ForegroundColor = Game.BackgroundColor;
         }
     }
 }

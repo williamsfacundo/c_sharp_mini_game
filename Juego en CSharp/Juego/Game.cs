@@ -20,6 +20,18 @@ namespace Juego
             }
         }
 
+        public static ConsoleColor BackgroundColor 
+        {
+            set 
+            {
+                backgroundColor = value;
+            }
+            get 
+            {
+                return backgroundColor;
+            }
+        }
+
         public const short worldMinX = 1;
         public const short worldMaxX = 30;
         public const short worldMinY = 3;
@@ -191,14 +203,14 @@ namespace Juego
 
         private static void Draw()
         {
-            HUD.ShowPlayerScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score p1-", players[0]);
-            HUD.ShowPlayerScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score p2-", players[1]);
+            HUD.ShowPlayerScore(playerOneScoreXPosition, playerOneScoreYPosition, "Score p1-", players[0], playerOneColor);
+            HUD.ShowPlayerScore(playerTwoScoreXPosition, playerTwoScoreYPosition, "Score p2-", players[1], playerTwoColor);
             
-            HUD.ShowPlayerLives(playerOneLivesXPosition, playerOneLivesYPosition, players[0], "Lives p1-");
-            HUD.ShowPlayerLives(playerTwoLivesXPosition, playerTwoLivesYPosition, players[1], "Lives p2-");
+            HUD.ShowPlayerLives(playerOneLivesXPosition, playerOneLivesYPosition, players[0], "Lives p1-", playerOneColor);
+            HUD.ShowPlayerLives(playerTwoLivesXPosition, playerTwoLivesYPosition, players[1], "Lives p2-", playerTwoColor);
             
-            HUD.ShowPlayerStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0]);
-            HUD.ShowPlayerStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1]);
+            HUD.ShowPlayerStatus(showPlayerOneAttackMeassegeXPosition, showPlayerOneAttackMeassegeYPosition, players[0], playerOneColor);
+            HUD.ShowPlayerStatus(showPlayerTwoAttackMeassegeXPosition, showPlayerTwoAttackMeassegeYPosition, players[1], playerTwoColor);
 
             DrawEnemies();
 
