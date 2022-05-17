@@ -6,7 +6,7 @@
 
         public override void Move(ref struct_position_data position) 
         {
-            switch (Game.GenerateRandom.Next(1, maxMovementDirections))
+            switch (Game.GenerateRandom.Next(1, maxMovementDirections + 1))
             {
                 case 1:
 

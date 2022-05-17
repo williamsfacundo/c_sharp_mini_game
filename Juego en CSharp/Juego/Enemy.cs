@@ -1,4 +1,6 @@
-﻿namespace Juego
+﻿using System;
+
+namespace Juego
 {
     class Enemy : Character
     {
@@ -24,8 +26,8 @@
         }
 
         private Movement GetRandomMovePatern() 
-        {
-            switch (Game.GenerateRandom.Next(1, maxMovementPatterns)) 
+        {           
+            switch (Game.GenerateRandom.Next(1, maxMovementPatterns + 1)) 
             {
                 case 1:
 

@@ -8,7 +8,7 @@
 
         public Row_Movement() 
         {
-            switch(Game.GenerateRandom.Next(1, maxMovementDirections)) 
+            switch(Game.GenerateRandom.Next(1, maxMovementDirections + 1)) 
             {
                 case 1:
 
@@ -17,6 +17,11 @@
                 case 2:
 
                     direction = false;
+                    break;
+
+                default:
+
+                    direction = true;
                     break;
             }                        
         }
