@@ -44,15 +44,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
+    <Compile Include="Diagonal_Movement.cs" />
     <Compile Include="Enemies_type.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Hearts.cs" />
     <Compile Include="HUD.cs" />
+    <Compile Include="Movement.cs" />
+    <Compile Include="Normal_Movement.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PowerUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Row_Movement.cs" />
     <Compile Include="struct_position_data.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,19 +3,40 @@
     class Enemy : Character
     {
         private const short maxMovementPatterns = 3;
-        private const short maxNormalMovementRandomValues = 8;
+        //private const short maxNormalMovementRandomValues = 8;
 
-        private int random;
+        //private int random;
 
-        private Enemies_type.Enum_Enemy_Types movementPattern;
+        //private Enemies_type.Enum_Enemy_Types movementPattern;
 
-        private bool rowMovementDirection;
+        //private bool rowMovementDirection;
 
+        Movement movePatern;
+     
         public Enemy(short x, short y) : base(x, y) 
-        {           
-            movementPattern = GetRandomMovementPattern();
-            
-            rowMovementDirection = GetRandomRowMovement();
+        {
+            //movementPattern = GetRandomMovementPattern();
+            movePatern = GetRandomMovePatern();
+            //rowMovementDirection = GetRandomRowMovement();
+        }
+
+        Movement GetRandomMovePatern() 
+        {
+            switch (Game.GenerateRandom.Next(1, maxMovementPatterns)) 
+            {
+                case 1:
+
+                    return new Normal_Movement();                    
+                case 2:
+
+                    return new Diagonal_Movement();
+                case 3:
+
+                    return new Row_Movement();
+                default:
+
+                    return new Normal_Movement();                    
+            }            
         }
 
         public void Update() 
@@ -25,7 +46,8 @@
 
         private void MoveCharacter() 
         {
-            switch (movementPattern)
+            movePatern.Move(ref position);            
+            /*switch (movementPattern)
             {
                 case Enemies_type.Enum_Enemy_Types.NORMAL_MOVEMENT:
 
@@ -42,10 +64,10 @@
                     RowMovement();
                     
                     break;
-            }
+            }*/
         }
 
-        private void NormalMovemnt() 
+        /*private void NormalMovemnt() 
         {
             random = Game.GenerateRandom.Next(1, maxNormalMovementRandomValues);
 
@@ -87,9 +109,9 @@
 
                     break;
             }
-        }
+        }*/
 
-        private void DiagonalMovement() 
+        /*private void DiagonalMovement() 
         {
             random = Game.GenerateRandom.Next(1, maxNormalMovementRandomValues);
 
@@ -135,9 +157,9 @@
 
                     break;
             }
-        }
+        }*/
 
-        private void RowMovement() 
+        /*private void RowMovement() 
         {
             switch (rowMovementDirection)
             {
@@ -166,9 +188,9 @@
 
                     break;
             }
-        }
+        }*/
 
-        Enemies_type.Enum_Enemy_Types GetRandomMovementPattern() 
+        /*Enemies_type.Enum_Enemy_Types GetRandomMovementPattern() 
         {
             random = Game.GenerateRandom.Next(1, maxMovementPatterns);
 
@@ -183,13 +205,13 @@
                 default:
                     return Enemies_type.Enum_Enemy_Types.NORMAL_MOVEMENT;
             }
-        }
+        }*/
 
-        bool GetRandomRowMovement() 
+        /*bool GetRandomRowMovement() 
         {
             random = Game.GenerateRandom.Next(1, 2);
 
             return random % 2 == 0;
-        }
+        }*/
     }
 }
