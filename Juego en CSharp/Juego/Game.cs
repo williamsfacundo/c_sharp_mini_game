@@ -183,6 +183,19 @@ namespace Juego
         {
             players[0].Input(ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.UpArrow, ref cki);
             players[1].Input(ConsoleKey.A, ConsoleKey.D, ConsoleKey.S, ConsoleKey.W, ref cki);
+
+            ChangeEnemiesMovePattern();
+        }
+
+        private static void ChangeEnemiesMovePattern() 
+        {
+            if (cki.Key == ConsoleKey.P) 
+            {
+                foreach (Enemy enemy in enemies) 
+                {
+                    enemy.MovePattern = enemy.GetRandomMovePatern(enemy.MovePattern);
+                }
+            }
         }
 
         private static void CloseApplicationInput()
